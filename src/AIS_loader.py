@@ -43,7 +43,7 @@ class DanishAisLoader:
                                                             ais_df_date_filtred_unique['Latitude']),
                                 crs='epsg:4326')
 
-    def ais2geojson(self, ais_gdf, output_filename_path: str):
+    def save_ais_labels_in_geojson(self, ais_gdf, output_filename_path: str):
         """
         From each AIS unique location ship point, create oriented bounding box and store them in a geojson file
 

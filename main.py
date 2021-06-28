@@ -35,5 +35,6 @@ if __name__ == '__main__':
             ais_filter_per_time_and_clip_per_s2_tile = gpd.clip(ais_filter_per_time, s2_tile_shape)
             output_day_folder = os.path.join(output_folder_path, ais_processing_date_formatted)
             os.makedirs(output_day_folder, exist_ok=True)
-            DAL.ais2geojson(ais_filter_per_time_and_clip_per_s2_tile,
-                            os.path.join(output_folder_path, f'{s2_tile_dict["properties"]["title"]}.geojson'))
+            DAL.save_ais_labels_in_geojson(ais_filter_per_time_and_clip_per_s2_tile,
+                                           os.path.join(output_folder_path,
+                                                        f'{s2_tile_dict["properties"]["title"]}.geojson'))

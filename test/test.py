@@ -19,7 +19,7 @@ class AISTest(unittest.TestCase):
         ais_gdf = gpd.GeoDataFrame(ais_df, geometry=gpd.points_from_xy(ais_df['Longitude'], ais_df['Latitude']),
                                    crs='epsg:4326')
         DAL = AIS_loader.DanishAisLoader()
-        DAL.ais2geojson(ais_gdf, geojson_output_filepath)
+        DAL.save_ais_labels_in_geojson(ais_gdf, geojson_output_filepath)
 
         with open(geojson_output_filepath) as jsonfile:
             geojson_result = json.load(jsonfile)
