@@ -20,29 +20,9 @@ class DanishAisLoader:
     def __init__(self):
         pass
 
-    def ais2geojson(self, ais_gdf, output_filename_path: str):
-        """
-        From each AIS unique location ship point, create oriented bounding box and store them in a geojson file
-
-        :param ais_gdf: AIS GeoDataframe with unique point per ships already filter per time
-        :param output_filename_path: output filename geojson path
-        """
-        filtered_df = ais_gdf[(ais_gdf['Width'].notnull()) & (ais_gdf['Type of mobile'].str.startswith('Class'))]
-
-        features = []
-        for index, ship_attribute_dict in filtered_df.iterrows():
-            ship_polygon = create_ship_oriented_bounding_box_polygon(ship_attribute_dict)
-            features.append(geojson.Feature(geometry=ship_polygon,
-                                            properties={'Length': ship_attribute_dict["Length"],
-                                                        'Timestamp': str(ship_attribute_dict["# Timestamp"])}))
-
-        with open(output_filename_path, 'w', encoding='utf8') as fp:
-            if len(features) > 0:
-                geojson.dump(geojson.FeatureCollection(features), fp, sort_keys=True, ensure_ascii=False)
-
     def filter_unique_ship_location_with_timestamp(self, ais_df, min_timestamp: str, max_timestamp: str):
         """
-        Filter ship location per date to get only location matching to the satellite images. Convert the dataframe into
+        Filter ship location per date to get only location matching the satellite image. Convert the dataframe into
         a GeoDataFrame to clip location easily
 
         :param ais_df: Dataframe with every location points from AIS for a whole day
@@ -62,6 +42,26 @@ class DanishAisLoader:
                                 geometry=gpd.points_from_xy(ais_df_date_filtred_unique['Longitude'],
                                                             ais_df_date_filtred_unique['Latitude']),
                                 crs='epsg:4326')
+
+    def ais2geojson(self, ais_gdf, output_filename_path: str):
+        """
+        From each AIS unique location ship point, create oriented bounding box and store them in a geojson file
+
+        :param ais_gdf: AIS GeoDataframe with unique point per ships already filter per time
+        :param output_filename_path: output filename geojson path
+        """
+        filtered_df = ais_gdf[(ais_gdf['Width'].notnull()) & (ais_gdf['Type of mobile'].str.startswith('Class'))]
+
+        features = []
+        for index, ship_attribute_dict in filtered_df.iterrows():
+            ship_polygon = create_ship_oriented_bounding_box_polygon(ship_attribute_dict)
+            features.append(geojson.Feature(geometry=ship_polygon,
+                                            properties={'Length': ship_attribute_dict["Length"],
+                                                        'Timestamp': str(ship_attribute_dict["# Timestamp"])}))
+
+        with open(output_filename_path, 'w', encoding='utf8') as fp:
+            if len(features) > 0:
+                geojson.dump(geojson.FeatureCollection(features), fp, sort_keys=True, ensure_ascii=False)
 
     def list_available_files(self):
         "List available files on Danish Maritime Authority FTP"
