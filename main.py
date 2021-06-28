@@ -9,8 +9,9 @@ from tqdm import tqdm
 from src.AIS_loader import DanishAisLoader
 from src.sentinel_download import SentinelHubDownloader
 
+# Can be change to work in local (or create config file)
 input_folder_path = '/opt/data/input'
-output_folder_path = '/opt/data/output/test'
+output_folder_path = '/opt/data/output'
 
 if __name__ == '__main__':
 
