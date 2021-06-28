@@ -1,6 +1,7 @@
 # Contains data from the Danish Maritime Authority that is used in accordance with the conditions for the use of Danish public data.
 import os
 import shutil
+import sys
 import urllib.request as request
 from contextlib import closing
 from datetime import datetime, timedelta
@@ -10,7 +11,9 @@ import geopandas as gpd
 import pandas as pd
 from tqdm import tqdm
 
-from challenge.Part_2.repository.src.utils import create_ship_oriented_bounding_box_polygon
+sys.path.append('src')
+
+from src.utils import create_ship_oriented_bounding_box_polygon
 
 
 class DanishAisLoader:

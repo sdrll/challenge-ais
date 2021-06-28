@@ -5,7 +5,11 @@ import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Polygon
 
-from challenge.Part_2.repository.src.AIS_loader import DanishAisLoader
+import sys
+
+sys.path.append('../src')
+
+import AIS_loader
 
 
 class AISTest(unittest.TestCase):
@@ -14,7 +18,7 @@ class AISTest(unittest.TestCase):
         ais_df = pd.read_csv('ais_test.csv', delimiter=',')
         ais_gdf = gpd.GeoDataFrame(ais_df, geometry=gpd.points_from_xy(ais_df['Longitude'], ais_df['Latitude']),
                                    crs='epsg:4326')
-        DAL = DanishAisLoader()
+        DAL = AIS_loader.DanishAisLoader()
         DAL.ais2geojson(ais_gdf, geojson_output_filepath)
 
         with open(geojson_output_filepath) as jsonfile:
