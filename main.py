@@ -1,18 +1,16 @@
 import os
 from datetime import datetime
 
-import geojson
 import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Polygon
 from tqdm import tqdm
 
-from challenge.Part_2.repository.src.utils import create_ship_oriented_bounding_box_polygon
 from src.AIS_loader import DanishAisLoader
 from src.sentinel_download import SentinelHubDownloader
 
-input_folder_path = '../data/input'
-output_folder_path = '../data/output/test'
+input_folder_path = '/opt/data/input'
+output_folder_path = '/opt/data/output/test'
 
 if __name__ == '__main__':
 
