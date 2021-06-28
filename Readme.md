@@ -4,6 +4,8 @@ The objective is to provide
 a Docker container that could ingest AIS data, compare it with available Sentinel-2 images on the
 same day and provide machine learning-ready annotations
 
+AIS csv should be store in the following format : `name_yyyymmdd.csv`
+
 Build the docker image : `sudo make build`
 
 Create a data folder with two subfolders inside : `input` and `output`
