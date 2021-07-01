@@ -9,11 +9,10 @@ from tqdm import tqdm
 from src.AIS_loader import DanishAisLoader
 from src.sentinel_download import SentinelHubDownloader
 
-# Can be change to work in local (or create config file)
-input_folder_path = '/opt/data/input'
-output_folder_path = '/opt/data/output'
-
 if __name__ == '__main__':
+    # Can be change to work in local (or create config file)
+    input_folder_path = '/opt/data/input'
+    output_folder_path = '/opt/data/output'
 
     # for each AIS csv
     for ais_csv_filename in os.listdir(input_folder_path):
@@ -36,5 +35,5 @@ if __name__ == '__main__':
             output_day_folder = os.path.join(output_folder_path, ais_processing_date_formatted)
             os.makedirs(output_day_folder, exist_ok=True)
             DAL.save_ais_labels_in_geojson(ais_filter_per_time_and_clip_per_s2_tile,
-                                           os.path.join(output_folder_path,
+                                           os.path.join(output_day_folder,
                                                         f'{s2_tile_dict["properties"]["title"]}.geojson'))
